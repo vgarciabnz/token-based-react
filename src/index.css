@@ -5,7 +5,7 @@
 
 .apps {
     padding-top: 40px;
-    background: deepskyblue;
+    background: #b0e8fb;
 }
 
 .appButton, .loginButton, .noticebox {
@@ -30,6 +30,9 @@
 
 .dataValueList {
     width: 20%;
+    margin-left: 5%;
+    margin-top: 40px;
+    text-align: left;
 }
 
 .flex {
@@ -38,8 +41,12 @@
 
 .visualization {
     background: #dadfe4;
+    padding: 20px;
+    margin-top: 20px;
 }
 
 .dataEntry {
     background: papayawhip;
+    padding: 20px;
+    margin-top: 20px;
 }
