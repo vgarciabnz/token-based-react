@@ -1,48 +1,62 @@
-import DataValue from "../model/DataValue";
-
 export class Api {
 
     static url = null;
     static loginPath = "/login";
-    static appTokenPath = "/token?appId=";
-    static dataPath = "/dataValues";
+
+    static appTokenPath(appId) {
+        return Api.url + "/token?id=" + appId
+    }
+
+    static dataPath(token) {
+        return Api.url + "/dataValues?token=" + token;
+    }
+
+    static headers(token) {
+        return {
+            "Content-Type": "application/json",
+            "Authentication": 'Bearer ' + token
+        }
+    }
 
     static async login(username, password) {
         const path = Api.url + Api.loginPath;
-        //return await fetch(path);
+        const data = {
+            name: username,
+            pwd: password
+        }
+        const result = await fetch(path, {
+            method: "POST",
+            headers: {
+                "Authorization": 'Basic ' + btoa(username + ":" + password),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
 
-        console.log("Mocking " + path);
-        return "WERIUJASDFLMBWERUISDFJKW";
+        const json = await result.json();
+        return json.jwtToken;
     }
 
     static async appToken(masterToken, appId) {
-        const path = Api.url + Api.appTokenPath + appId;
-        //return await fetch(path);
-
-        console.log("Mocking " + path);
-        return "tokenfor" + appId;
+        const path = Api.appTokenPath(appId);
+        const response = await fetch(path, {headers: Api.headers(masterToken)});
+        const json = await response.json();
+        return json.jwtToken;
     }
 
     static async getDataValues(appToken) {
-        const path = Api.url + Api.dataPath;
-        //return await fetch(path);
-
-        console.log("Mocking " + path);
-        return [
-            new DataValue(50),
-            new DataValue(60)
-        ];
-    }
+        const path = Api.dataPath(appToken);
+        const response = await fetch(path, {headers: Api.headers(appToken)});
+        return await response.json();
+   }
 
     static async addDataValue(appToken, dataValue) {
-        const path = Api.url + Api.dataPath;
-        await fetch(path, {
+        const path = Api.dataPath(appToken)
+        return await fetch(path, {
             method: "POST",
             mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(dataValue), // body data type must match "Content-Type" header
+            headers: Api.headers(appToken),
+            body: JSON.stringify(dataValue)
         });
     }
 }

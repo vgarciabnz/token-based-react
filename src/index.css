@@ -2,3 +2,44 @@
     width: 30%;
     padding-left: 35%;
 }
+
+.apps {
+    padding-top: 40px;
+    background: deepskyblue;
+}
+
+.appButton, .loginButton, .noticebox {
+    margin: 10px;
+}
+
+.appView {
+    width: 30%;
+    height: 500px;
+    padding-left: 5%;
+    text-align: left;
+}
+
+.dataValueInput {
+    width: 80%;
+    height: 500px;
+}
+
+.valueInput {
+    padding: 5px;
+}
+
+.dataValueList {
+    width: 20%;
+}
+
+.flex {
+    display: flex;
+}
+
+.visualization {
+    background: #dadfe4;
+}
+
+.dataEntry {
+    background: papayawhip;
+}

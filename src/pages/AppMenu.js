@@ -4,10 +4,11 @@ import AppModel from "../model/AppModel";
 
 class AppMenu extends React.Component {
 
-    visualizerApp = new AppModel("visualizer", "Visualizer", null);
-    dataEntryApp = new AppModel("dataentry", "Data Entry", null);
+    static visualizerApp = new AppModel("visualization", "Visualizer app", null);
+    static dataEntryApp = new AppModel("dataEntry", "Data Entry app", null);
 
-    appList = [this.visualizerApp, this.dataEntryApp];
+    // eslint-disable-next-line no-use-before-define
+    appList = [AppMenu.visualizerApp, AppMenu.dataEntryApp];
 
     launchApp = async ({value, name}, event) => {
         console.log(value);
@@ -18,17 +19,20 @@ class AppMenu extends React.Component {
     render() {
         return (
             <div className="apps">
-                <Button name={this.dataEntryApp.id}
+                <h2>App menu:</h2>
+                <Button name={AppMenu.dataEntryApp.id}
+                        className="appButton"
                         primary
-                        value={this.dataEntryApp.id}
+                        value={AppMenu.dataEntryApp.id}
                         onClick={this.launchApp}>
-                    {this.dataEntryApp.name}
+                    {AppMenu.dataEntryApp.name}
                 </Button>
-                <Button name={this.visualizerApp.id}
+                <Button name={AppMenu.visualizerApp.id}
+                        className="appButton"
                         primary
-                        value={this.visualizerApp.id}
+                        value={AppMenu.visualizerApp.id}
                         onClick={this.launchApp}>
-                    {this.visualizerApp.name}
+                    {AppMenu.visualizerApp.name}
                 </Button>
             </div>
         );
