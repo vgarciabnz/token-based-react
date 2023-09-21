@@ -1,25 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import Login from "./pages/Login";
+import React from "react";
+import AppMenu from "./pages/AppMenu";
+import AppView from "./pages/AppView";
+import {Api} from "./api/Api";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+    state = {
+        masterToken: null,
+        loadedApp: null
+    }
+
+    getMasterToken = (token) => {
+        this.setState({masterToken: token});
+    }
+
+    loadApp = async (app) => {
+        app.token = await Api.appToken(this.state.masterToken, app.id);
+        this.setState({loadedApp: app});
+    }
+
+    render() {
+        return (
+            <div className="App">
+                {this.state.masterToken == null ?
+                    <Login onToken={this.getMasterToken}></Login> :
+                    <AppMenu onAppSelected={this.loadApp}></AppMenu>
+                }
+                {this.state.loadedApp != null ?
+                    <AppView app={this.state.loadedApp}></AppView> :
+                    <span>No app selected</span>
+                }
+            </div>
+        );
+    }
 }
 
 export default App;
